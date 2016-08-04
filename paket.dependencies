@@ -1,0 +1,9 @@
+source https://www.nuget.org/api/v2
+nuget FAKE
+nuget FSharp.Azure.StorageTypeProvider
+nuget FSharp.Core
+nuget FSharp.Data
+nuget SQLProvider
+nuget Suave
+nuget Suave.DotLiquid
+nuget Suave.Testing
