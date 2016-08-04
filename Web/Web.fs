@@ -9,7 +9,7 @@ open System
 open System.IO
 open System.Net
 
-DotLiquid.setTemplatesDir (__SOURCE_DIRECTORY__ + "/Templates")
+DotLiquid.setTemplatesDir (Path.Combine(__SOURCE_DIRECTORY__, "Templates"))
 
 let staticRoute = choose [ Filters.path "/Content" >=> Filters.GET >=> Files.browseHome ]
 
@@ -23,7 +23,7 @@ let port =
   else p
   |> Sockets.Port.Parse
 
-let staticPath = Path.Combine(Environment.CurrentDirectory, "Content")
+let staticPath = Path.Combine(__SOURCE_DIRECTORY__, "Content")
 
 let config = 
   { defaultConfig with logger = Loggers.saneDefaultsFor LogLevel.Debug
