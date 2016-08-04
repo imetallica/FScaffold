@@ -4,39 +4,20 @@
 open Fake
 
 // Directories
-let buildDir  = "./build/"
-let deployDir = "./deploy/"
-
-
+let buildDir = "./build/"
 // Filesets
-let appReferences  =
-    !! "/**/*.csproj"
-    ++ "/**/*.fsproj"
-
+let appReferences = !!"/**/*.csproj" ++ "/**/*.fsproj"
 // version info
-let version = "0.1"  // or retrieve from CI server
+let version = "0.1" // or retrieve from CI server
 
 // Targets
-Target "Clean" (fun _ ->
-    CleanDirs [buildDir; deployDir]
-)
-
-Target "Build" (fun _ ->
-    // compile all projects below src/app/
-    MSBuildDebug buildDir "Build" appReferences
-    |> Log "AppBuild-Output: "
-)
-
-Target "Deploy" (fun _ ->
-    let wwwRootDir = __SOURCE_DIRECTORY__ @@ "../wwwroot"
-    CleanDir wwwRootDir
-    CopyRecursive buildDir wwwRootDir false |> ignore
-)
-
+Target "Clean" (fun _ -> CleanDirs [ buildDir ])
+Target "Build" (fun _ -> MSBuildRelease buildDir "Build" appReferences |> Log "AppBuild-Output: ")
+Target "Deploy" (fun _ -> 
+  let wwwRootDir = __SOURCE_DIRECTORY__ @@ "..\wwwroot"
+  CleanDir wwwRootDir
+  CopyRecursive buildDir wwwRootDir false |> ignore)
 // Build order
-"Clean"
-  ==> "Build"
-  ==> "Deploy"
-
+"Clean" ==> "Build" ==> "Deploy"
 // start build
 RunTargetOrDefault "Deploy"
