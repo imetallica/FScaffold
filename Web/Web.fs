@@ -18,7 +18,7 @@ let routes =
            staticRoute ]
 
 let port = 
-  let p = Environment.GetEnvironmentVariable("%HTTP_PLATFORM_PORT%")
+  let p = Environment.GetEnvironmentVariable("HTTP_PLATFORM_PORT")
   if isNull p then "8083"
   else p
   |> Sockets.Port.Parse

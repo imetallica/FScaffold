@@ -2,6 +2,7 @@
 #r "./packages/FAKE/tools/FakeLib.dll"
 
 open Fake
+open System
 open System.IO
 
 // Directories
