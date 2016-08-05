@@ -11,11 +11,11 @@ open System.Net
 
 DotLiquid.setTemplatesDir (Path.Combine(__SOURCE_DIRECTORY__, "Templates"))
 
-let staticRoute = choose [ Filters.path "/Content" >=> Filters.GET >=> Files.browseHome ]
-
 let routes = 
   choose [ Filters.path "/" >=> Controllers.HomeController.routes
-           staticRoute ]
+           // Should be the last one
+           Files.browseHome
+           RequestErrors.NOT_FOUND "Page not found." ]
 
 let port = 
   let p = Environment.GetEnvironmentVariable("HTTP_PLATFORM_PORT")
